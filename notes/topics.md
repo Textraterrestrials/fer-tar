@@ -1,28 +1,23 @@
-<h3>Possible project topics</h3>
+## Possible project topics
 
 
-Full descriptions are <a href="https://www.fer.unizg.hr/_download/repository/TAR-2021-ProjectTopics.pdf">here</a>.
+Full descriptions are [here](https://www.fer.unizg.hr/_download/repository/TAR-2021-ProjectTopics.pdf)
 
 
-<b>hot</b>
-<ul>
-  <li>3. Irony Detection</li>
-  <li>4. Personality Trait Classification of Essays</li>
-  <li>13. Detecting Emotions from Text in Context</li>
-</ul>
+**hot**
+- 3. Irony Detection
+- 4. Personality Trait Classification of Essays
+- 13. Detecting Emotions from Text in Context
 
 
-<i>lukewarm</i>
-<ul>
-  <li>7. Extraction of Counts and Measurements from ScientificTexts</li>
-  <li>8. Author Profiling:  Identification of Gender and Age</li>
-  <li>12. Celebrity Profiling</li>
-  <li>16. Commonsense Validation and Explanation (ComVE)</li>
-</ul>
+
+*lukewarm*
+- 7. Extraction of Counts and Measurements from ScientificTexts
+- 8. Author Profiling:  Identification of Gender and Age
+- 12. Celebrity Profiling
+- 16. Commonsense Validation and Explanation (ComVE)
 
 
 need more info
-<ul>
-  <li>10. Stress Analysis in Social Media</li>
-  <li>11. Semantic Extraction from Cybersecurity Reports</li>
-</ul>
+- 10. Stress Analysis in Social Media
+- 11. Semantic Extraction from Cybersecurity Reports
