@@ -7,3 +7,4 @@
 - Su Wang, Greg Durrett, and Katrin Erk. (2018). Modeling Semantic Plausibility by Injecting World Knowledge. *arXiv preprint arXiv:1804.00619*.
 - Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. *arXiv preprint arXiv:1810.04805*.
 - Davis, E., and Marcus, G. (2015). Commonsense Reasoning and Commonsense Knowledge in Artificial Intelligence. *Communications of the ACM, 58*, p.92-103.
+- Liang Yao, Chengsheng Mao, Yuan Luo (2019). Graph Convolutional Networks for Text Classification https://arxiv.org/abs/1809.05679
