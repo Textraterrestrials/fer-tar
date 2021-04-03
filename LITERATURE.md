@@ -15,5 +15,7 @@
 ## GNN
 - Yao et al. (2019). Graph Convolutional Networks for Text Classification https://arxiv.org/abs/1809.05679
 - Bastos et al. (2020). RECON: Relation Extraction using Knowledge Graph Context in a Graph Neural Network https://arxiv.org/abs/2009.08694
+
 ## Transformers
 - Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. *arXiv preprint arXiv:1810.04805*.
+- BERT tutorial: [https://mccormickml.com/2019/07/22/BERT-fine-tuning/.](https://mccormickml.com/2019/07/22/BERT-fine-tuning/)
