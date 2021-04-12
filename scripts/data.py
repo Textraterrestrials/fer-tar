@@ -1,4 +1,6 @@
+import numpy as np
 import pandas as pd
+import torch
 
 
 def load_data(path_to_data_folder='/content/gdrive/MyDrive/data'):
@@ -31,3 +33,93 @@ def melt_columns(X, y):
     y_melted = y_melted.append(y)
 
     return X_melted, y_melted
+
+
+x_df_to_numpy = lambda x: np.array(x[['sent0', 'sent1']])
+
+
+class ComVEDataset(torch.utils.data.Dataset):
+
+    def __init__(self, x, y, x_transforms=[], y_transforms=[], lazy=False):
+        """
+        Creates a dataset from the given data. If given data is in pandas.DataFrame objects,
+        they are transformed into numpy arrays before performing other given transformations.
+
+        :param x: (Union(numpy.ndarray, pandas.DataFrame)) array containing pairs of sentences
+        :param y: (Union(numpy.ndarray, pandas.DataFrame)) array containing indexes of incorrect sentences
+        :param x_transforms: (iterable[callable]) functions to transform a single pair of sentences.
+        Default is empty list
+        :param y_transforms: (iterable[callable]) functions to transform the index. Default is empty list
+        :param lazy: (boolean) flag indicating if the transformations should be done lazy. Default is False
+        """
+        super(ComVEDataset, self).__init__()
+        assert len(x) == len(y), "Length of x and y must match."
+
+        if isinstance(x, pd.DataFrame):
+            x = x_df_to_numpy(x)
+        if isinstance(y, pd.DataFrame):
+            y = np.array(y)
+
+        if lazy is False:
+            for x_transform in x_transforms:
+                x = [x_transform(x_) for x_ in x]
+            for y_transform in y_transforms:
+                y = [y_transform(y_) for y_ in y]
+
+        self.x_transforms = x_transforms
+        self.y_transforms = y_transforms
+        self.lazy = lazy
+        self.x = x
+        self.y = y
+
+    def __len__(self):
+        return len(self.x)
+
+    def __getitem__(self, idx):
+        x = self.x[idx]
+        y = self.y[idx]
+
+        if self.lazy is True:
+            for x_transform in self.x_transforms:
+                x = x_transform(x)
+            for y_transform in self.y_transforms:
+                y = y_transform(y)
+
+        return x, y
+
+    @classmethod
+    def from_csv(cls, path_to_x, path_to_y, x_transforms=[], y_transforms=[], lazy=False):
+        """
+        :param path_to_x: (str) path to the csv file from which pairs of sentences are read
+        :param path_to_y: (str) path to the csv file from which labels of sentences are read
+        :param x_transforms: (iterable[callable]) functions to transform a single pair of sentences.
+            Default is empty list
+        :param y_transforms: (iterable[callable]) functions to transform the index. Default is empty list
+        :param lazy: (boolean) flag indicating if the transformations should be done lazy. Default is False
+        :return: (ComVEDataset) dataset read from the given files
+        """
+        x = pd.read_csv(path_to_x, index_col=0)
+        y = pd.read_csv(path_to_y, index_col=0, header=None)
+        return cls(x, y, x_transforms, y_transforms, lazy)
+
+    @classmethod
+    def from_data_folder(cls, path_to_data_folder='/content/gdrive/MyDrive/data',
+                         x_transforms=[], y_transforms=[], lazy=False):
+        """
+        Load train, dev and test data into (ComVEDataset) datasets from given directory.
+        Check examples.py
+
+        :param path_to_data_folder: (str) path to the folder contain train, dev and test data. If not specified the default
+            path is used: /content/gdrive/MyDrive/data
+        :param x_transforms: (iterable[callable]) functions to transform a single pair of sentences.
+            Default is empty list
+        :param y_transforms: (iterable[callable]) functions to transform the index. Default is empty list
+        :param lazy: (boolean) flag indicating if the transformations should be done lazy. Default is False
+        :return: (tuple[ComVEDataset]): train dataset, dev dataset, test dataset
+        """
+        X_train, X_dev, X_test, y_train, y_dev, y_test = load_data(path_to_data_folder)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
