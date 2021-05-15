@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 class MyDataset(Dataset):
-	def __init__(self, data_file_name, data_dir='.data/'):
+	def __init__(self, data_file_name, data_dir='.'):
 		super().__init__()
 
 		data_path = os.path.join(data_file_name)
@@ -24,26 +24,29 @@ class MyDataset(Dataset):
 			csv_reader = csv.reader(csv_file, delimiter='\t')
 			
 			for row in csv_reader:
-				data_str = f"{row[0]}: {row[1]}{self.end_of_text_token}"
+				print(row)
+				data_str = f"{row[0]} <SEP> {row[1]} {self.end_of_text_token}"
 				self.data_list.append(data_str)
-		
+
 	def __len__(self):
 		return len(self.data_list)
 
 	def __getitem__(self, item):
 		return self.data_list[item]
 
+
 def get_data_loader(data_file_name):
 	dataset = MyDataset(data_file_name)
 	data_loader = DataLoader(dataset, batch_size=1, shuffle=True)
 	return data_loader
 
-def train(epochs, data_loader, batch_size, tokenizer, model, device):	
+
+def train(epochs, data_loader, batch_size, tokenizer, model, device):
 	batch_counter = 0
 	sum_loss = 0.0
 
 	for epoch in range(epochs):
-		print (f'Running {epoch+1} epoch')
+		print(f'Running {epoch+1} epoch')
 
 		for idx, txt in enumerate(data_loader):
 			txt = torch.tensor(tokenizer.encode(txt[0]))
@@ -96,7 +99,7 @@ if __name__ == '__main__':
 	parser.add_argument('--epoch', default= 3,type=int, action='store', help='Number of epochs to run')
 	parser.add_argument('--warmup', default=300, type=int, action='store', help='Number of warmup steps to run')
 	parser.add_argument('--model_name', default='mymodel.pt', type=str, action='store', help='Name of the model file')
-	parser.add_argument('--data_file', default='mydata.csv', type=str, action='store', help='Name of the data file')
+	parser.add_argument('--data_file', default='data/SMSSpamCollection', type=str, action='store', help='Name of the data file')
 	parser.add_argument('--batch', type=int, default=32, action='store', help='Batch size')
 	parser.add_argument('--learning_rate', default=3e-5, type=float, action='store', help='Learning rate for the model')
 	parser.add_argument('--max_len', default=200, type=int, action='store', help='Maximum length of sequence')

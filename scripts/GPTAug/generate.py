@@ -49,7 +49,7 @@ def generate(tokenizer, model, sentences, label):
                     n = 5
 
                 next_token_id = choose_from_top_k_top_n(softmax_logits.to('cpu').numpy())  # top-k-top-n sampling
-                cur_ids = torch.cat([cur_ids, torch.ones((1, 1)).long().to(device) * next_token_id], dim=1)
+                cur_ids = torch.cat([cur_ids, torch.ones((1, 1)).long().to('cuda') * next_token_id], dim=1)
 
                 if next_token_id in tokenizer.encode('<|endoftext|>'):
                     finished = True
