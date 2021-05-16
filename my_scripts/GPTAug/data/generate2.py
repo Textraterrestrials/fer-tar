@@ -13,7 +13,7 @@ from tqdm import tqdm
 warnings.filterwarnings('ignore')
 
 
-def choose_from_top_k_top_n(probs, k=20, p=0.5):
+def choose_from_top_k_top_n(probs, k=0, p=0.9):
     ind = np.argpartition(probs, -k)[-k:]
     top_prob = probs[ind]
     top_prob = {i: top_prob[idx] for idx, i in enumerate(ind)}
@@ -42,6 +42,7 @@ def generate(tokenizer, model, sentences, label):
             model.to('cuda:0')
 
             cur_ids = torch.tensor(tokenizer.encode(label)).unsqueeze(0).to('cpu')
+
             for i in range(100):
                 outputs = model(cur_ids.cuda(), labels=cur_ids.cuda())
                 loss, logits = outputs[:2]
@@ -63,10 +64,12 @@ def generate(tokenizer, model, sentences, label):
             if finished:
                 output_list = list(cur_ids.squeeze().to('cpu').numpy())
                 output_text = tokenizer.decode(output_list)
+                print(output_text.split(' '))
                 s.append(' '.join(output_text.split(' ')[2:-2]))
             else:
                 output_list = list(cur_ids.squeeze().to('cpu').numpy())
                 output_text = tokenizer.decode(output_list)
+                print(output_text.split(' '))
                 s.append(' '.join(output_text.split(' ')[2:-2]))
 
     pd.DataFrame({'sentence': s}).to_csv('GPT2_medium_aug_sense', index_label='id')
@@ -77,7 +80,7 @@ def load_models(model_name):
     Summary:
         Loading the trained model
     """
-    print('Loading Trained GPT-2 Model')
+    print('Loading Trained GPT-2 Modell')
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
     model = GPT2LMHeadModel.from_pretrained('gpt2-large')
     model_path = model_name

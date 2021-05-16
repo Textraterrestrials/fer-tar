@@ -20,13 +20,14 @@ class MyDataset(Dataset):
         data_path = os.path.join(data_file_name)
 
         self.data_list = []
-        self.end_of_text_token = " <|endoftext|> "
+        self.end_of_text_token = " <|endoftext|>"
 
         with open(data_path) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for idx, row in enumerate(csv_reader):
+                print(row)
                 if idx:
-                    data_str = f"{row[2]} <SEP> {row[1]} {self.end_of_text_token}"
+                    data_str = f"{row} {self.end_of_text_token}"
                     self.data_list.append(data_str)
 
     def __len__(self):
@@ -91,8 +92,8 @@ def load_models():
         Loading Pre-trained model
     """
     print('Loading/Downloading GPT-2 Model')
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
-    model = GPT2LMHeadModel.from_pretrained('gpt2-large')
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-medium')
+    model = GPT2LMHeadModel.from_pretrained('gpt2-medium')
     return tokenizer, model
 
 
@@ -103,7 +104,7 @@ if __name__ == '__main__':
     parser.add_argument('--epoch', default=3, type=int, action='store', help='Number of epochs to run')
     parser.add_argument('--warmup', default=300, type=int, action='store', help='Number of warmup steps to run')
     parser.add_argument('--model_name', default='mymodel.pt', type=str, action='store', help='Name of the model file')
-    parser.add_argument('--data_file', default='A_sentences_melted.csv', type=str, action='store',
+    parser.add_argument('--data_file', default='../stvarno_ne_znam.csv', type=str, action='store',
                         help='Name of the data file')
     parser.add_argument('--batch', type=int, default=32, action='store', help='Batch size')
     parser.add_argument('--learning_rate', default=3e-5, type=float, action='store', help='Learning rate for the model')

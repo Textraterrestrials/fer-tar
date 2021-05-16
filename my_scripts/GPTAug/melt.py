@@ -9,7 +9,6 @@ if __name__ == '__main__':
     X, y = melt_columns(sentences[['sent0', 'sent1']], labels['label'])
     X = pd.DataFrame(X)
 
-
     X.insert(1, 'label', list(y))
     y.to_csv('A_labels_melted.csv', index_label='id', header=['label'])
     X.to_csv('A_sentences_melted.csv', index_label='id', header=['sentence', 'label'])

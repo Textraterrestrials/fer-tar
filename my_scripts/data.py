@@ -13,9 +13,9 @@ def load_data(path_to_data_folder='/content/gdrive/MyDrive/data'):
     X_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_dev_data.csv', index_col=0)
     X_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_test_data.csv', index_col=0)
 
-    y_train = pd.read_csv(path_to_data_folder + '/Training/subtaskA_answers_all.csv', index_col=0, header=None)
-    y_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_gold_answers.csv', index_col=0, header=None)
-    y_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_gold_answers.csv', index_col=0, header=None)
+    y_train = pd.read_csv(path_to_data_folder + '/Training/subtaskA_answers_all.csv', index_col=0, header=None, dtype=np.float32)
+    y_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
+    y_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
 
     return X_train, X_dev, X_test, y_train, y_dev, y_test
 
@@ -99,7 +99,7 @@ class ComVEDataset(torch.utils.data.Dataset):
         :return: (ComVEDataset) dataset read from the given files
         """
         x = pd.read_csv(path_to_x, index_col=0)
-        y = pd.read_csv(path_to_y, index_col=0, header=None)
+        y = pd.read_csv(path_to_y, index_col=0, header=None, dtype=np.float32)
         return cls(x, y, x_transforms, y_transforms, lazy)
 
     @classmethod
