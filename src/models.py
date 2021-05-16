@@ -17,16 +17,10 @@ class TransformerBasedClassifier(pl.LightningModule):
 
     def forward(self, x_batch):
         sent0_embedded = self.embed(x_batch[0])
-        sent0_embedded = sent0_embedded.mean(dim=2)
-
-        #print(sent0_embedded)
-        #print(sent0_embedded.shape)
         sent1_embedded = self.embed(x_batch[1])
-        sent1_embedded = sent1_embedded.mean(dim=2)
 
-        bla = self.dropout(sent0_embedded)
         # print(bla.shape)
-        sent0_logit = self.linear(bla).reshape(-1, 1)
+        sent0_logit = self.linear(self.dropout(sent0_embedded)).reshape(-1, 1)
         sent1_logit = self.linear(self.dropout(sent1_embedded)).reshape(-1, 1)
         e0 = torch.exp(sent0_logit)
         e1 = torch.exp(sent1_logit)
@@ -83,7 +77,7 @@ class ElectraClassifier(TransformerBasedClassifier):
             attention_mask=sent_batch['attention_mask']
         )
 
-        return outputs.last_hidden_state[2]
+        return outputs.last_hidden_state[:, 0, :]
 
 
 class AlbertClassifier(TransformerBasedClassifier):
@@ -113,3 +107,5 @@ class RobertaClassifier(TransformerBasedClassifier):
         # print('vars(outputs)', vars(outputs))
         # print('pooler_output.shape', outputs.pooler_output.shape)
         return outputs.pooler_output
+
+print('?')
