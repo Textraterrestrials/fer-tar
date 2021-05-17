@@ -18,4 +18,5 @@
 
 ## Transformers
 - Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. *arXiv preprint arXiv:1810.04805*.
+- Chi Sun, Xipeng Qiu, Yige Xu, and Xuanjing Huang. (2020). How to Fine-Tune BERT for Text Classification?. *arXiv preprint arXiv:1905.05583*.
 - BERT tutorial: [https://mccormickml.com/2019/07/22/BERT-fine-tuning/.](https://mccormickml.com/2019/07/22/BERT-fine-tuning/)
