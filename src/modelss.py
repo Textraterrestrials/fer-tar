@@ -68,9 +68,9 @@ class TransformerBasedClassifier(pl.LightningModule):
         dictionary = {
             'drop': self.dropout.p,
             'epoch_end': self.current_epoch + 1,
-            'predictions': predictions,
+            'predictions': predictions.long().flatten().tolist(),
             'acc': acc,
-            'loss': loss
+            'loss': loss.item()
         }
         with open(self.transformer.config.name_or_path + '.conf', 'w') as out:
             import json

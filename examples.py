@@ -5,7 +5,7 @@ from my_scripts import data
 from src.modelss import TransformerBasedClassifier
 from src.tokenizers import TransformerTokenizer
 
-NAME = 'electra'
+NAME = 'bert'
 
 train_ds = data.ComVEDataset.from_csv(
     'Training/subtaskA_data_all.csv',
