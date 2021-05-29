@@ -2,28 +2,20 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 
 from my_scripts import data
-from src import encoders
-from src.models import BertClassifier, AlbertClassifier
+from src.modelss import TransformerBasedClassifier
+from src.tokenizers import TransformerTokenizer
 
-# example how to load datasets and iterate in batches
-# fake_encoder = encoders.FakeEncoder()
-# train_ds, dev_ds, test_ds = data.ComVEDataset.from_data_folder(
-#     # change this accordingly
-#     '~/Documents/tar-data',
-#     x_transforms=[encoders.BertEncoder],
-#     lazy=True
-# )
+NAME = 'bert'
 
 train_ds = data.ComVEDataset.from_csv(
-    'subtaskA_data_all.csv',
-    'subtaskA_answers_all.csv',
-    x_transforms=[encoders.AlbertEncoder()],
+    'Training/subtaskA_data_all.csv',
+    'Training/subtaskA_answers_all.csv',
+    x_transforms=[TransformerTokenizer(NAME)],
     lazy=True
 )
 train_dataloader = DataLoader(train_ds, batch_size=32, shuffle=True)
 
-model = AlbertClassifier()
-model.to('cpu')
+model = TransformerBasedClassifier(NAME)
 
-trainer = pl.Trainer(max_epochs=5, gpus=1, checkpoint_callback=False)
+trainer = pl.Trainer(fast_dev_run=True, max_epochs=5, checkpoint_callback=False)
 trainer.fit(model, train_dataloader)

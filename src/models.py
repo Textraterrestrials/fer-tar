@@ -83,11 +83,10 @@ class RobertaClassifier(TransformerBasedClassifier):
         return outputs.pooler_output
 
 
-
 class ElectraClassifier(TransformerBasedClassifier):
     def __init__(self, name='google/electra-small-discriminator', **hyperparams):
-        transformer = ElectraModel.from_pretrained(name) # transformer.config.hidden_size
-        super(ElectraClassifier, self).__init__(transformer,  embedding_size=256, **hyperparams)
+        transformer = ElectraModel.from_pretrained(name)  # transformer.config.hidden_size
+        super(ElectraClassifier, self).__init__(transformer, embedding_size=256, **hyperparams)
 
     def embed(self, sent_batch):
         outputs = self.transformer(
@@ -112,23 +111,23 @@ class AlbertClassifier(TransformerBasedClassifier):
         return outputs.pooler_output
 
 
-
-
-
 if __name__ == '__main__':
-    train_ds, val_ds, test_ds = data.ComVEDataset.from_data_folder(x_transforms=[encoders.RobertaEncoder()], path_to_data_folder='D:/git/fer-tar')
+    train_ds, val_ds, test_ds = data.ComVEDataset.from_data_folder(x_transforms=[encoders.RobertaEncoder()],
+                                                                   path_to_data_folder='D:/git/fer-tar')
     train_dataloader = DataLoader(train_ds, batch_size=32, shuffle=True)
     val_dataloader = DataLoader(val_ds, batch_size=len(val_ds))
 
     from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+
     early_stop_callback = EarlyStopping(
-       monitor='val_acc',
-       min_delta=0.00,
-       patience=5,
-       verbose=False,
-       mode='max'
+        monitor='val_acc',
+        min_delta=0.00,
+        patience=5,
+        verbose=False,
+        mode='max'
     )
 
     model = RobertaClassifier()
-    trainer = pl.Trainer(max_epochs=15, gpus=1, progress_bar_refresh_rate=20, callbacks=[EarlyStopping(monitor='val_loss')], checkpoint_callback=False)
+    trainer = pl.Trainer(max_epochs=15, gpus=1, progress_bar_refresh_rate=20,
+                         callbacks=[EarlyStopping(monitor='val_loss')], checkpoint_callback=False)
     trainer.fit(model, train_dataloader, val_dataloader)
