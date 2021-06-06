@@ -83,6 +83,7 @@ def load_models(model_name):
     print('Loading Trained GPT-2 Modell')
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
     model = GPT2LMHeadModel.from_pretrained('gpt2-large')
+
     model_path = model_name
     model.load_state_dict(torch.load(model_path))
     return tokenizer, model

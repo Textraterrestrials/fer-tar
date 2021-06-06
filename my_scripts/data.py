@@ -3,6 +3,21 @@ import pandas as pd
 import torch
 
 
+def load_data2(
+        data_folder='/content/gdrive/MyDrive/data',
+        training_x='/subtaskA_data_all.csv',
+        training_y='/subtaskA_answers_all.csv'):
+    X_train = pd.read_csv(f'{data_folder}/Training/{training_x}', index_col=0)
+    X_dev = pd.read_csv(f'{data_folder}/Dev/subtaskA_dev_data.csv', index_col=0)
+    X_test = pd.read_csv(f'{data_folder}/Test/subtaskA_test_data.csv', index_col=0)
+
+    y_train = pd.read_csv(f'{data_folder}/Training/{training_y}', index_col=0, header=None, dtype=np.float32)
+    y_dev = pd.read_csv(f'{data_folder}/Dev/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
+    y_test = pd.read_csv(f'{data_folder}/Test/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
+
+    return X_train, X_dev, X_test, y_train, y_dev, y_test
+
+
 def load_data(path_to_data_folder='/content/gdrive/MyDrive/data'):
     """
     :param path_to_data_folder: (str) path to the folder contain train, dev and test data. If not specified the default
@@ -13,9 +28,12 @@ def load_data(path_to_data_folder='/content/gdrive/MyDrive/data'):
     X_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_dev_data.csv', index_col=0)
     X_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_test_data.csv', index_col=0)
 
-    y_train = pd.read_csv(path_to_data_folder + '/Training/subtaskA_answers_all.csv', index_col=0, header=None, dtype=np.float32)
-    y_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
-    y_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_gold_answers.csv', index_col=0, header=None, dtype=np.float32)
+    y_train = pd.read_csv(path_to_data_folder + '/Training/subtaskA_answers_all.csv', index_col=0, header=None,
+                          dtype=np.float32)
+    y_dev = pd.read_csv(path_to_data_folder + '/Dev/subtaskA_gold_answers.csv', index_col=0, header=None,
+                        dtype=np.float32)
+    y_test = pd.read_csv(path_to_data_folder + '/Test/subtaskA_gold_answers.csv', index_col=0, header=None,
+                         dtype=np.float32)
 
     return X_train, X_dev, X_test, y_train, y_dev, y_test
 
@@ -109,7 +127,8 @@ class ComVEDataset(torch.utils.data.Dataset):
         Load train, dev and test data into (ComVEDataset) datasets from given directory.
         Check examples.py
 
-        :param path_to_data_folder: (str) path to the folder contain train, dev and test data. If not specified the default
+        :param path_to_data_folder: (str) path to the folder contain train, dev and test data. If not specified the
+        default
             path is used: /content/gdrive/MyDrive/data
         :param x_transforms: (iterable[callable]) functions to transform a single pair of sentences.
             Default is empty list
@@ -118,6 +137,123 @@ class ComVEDataset(torch.utils.data.Dataset):
         :return: (tuple[ComVEDataset]): train dataset, dev dataset, test dataset
         """
         X_train, X_dev, X_test, y_train, y_dev, y_test = load_data(path_to_data_folder)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def gpt2_lm_plain(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='/GPT2_data_final_log.csv',
+            training_y='/GPT2_answers_final_log.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False,
+            aug_size=10000):
+        X_train_lm, X_dev, X_test, y_train_lm, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        X_train_plain, X_dev, X_test, y_train_plain, y_dev, y_test = load_data2(data_folder)
+
+        X_train_plain = X_train_plain[['sent0', 'sent1']]        
+
+        X_train_lm = X_train_lm.head(aug_size)
+        y_train_lm = y_train_lm.head(aug_size)
+
+        X_train = pd.concat([X_train_plain, X_train_lm], axis=0)
+        y_train = pd.concat([y_train_plain, y_train_lm], axis=0)        
+
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def gpt2_lm(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='/GPT2_data_final.csv',
+            training_y='/GPT2_answers_final.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False):
+        X_train, X_dev, X_test, y_train, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def gpt2(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='/GPT2_subtaskA_data.csv',
+            training_y='/GPT2_answers.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False):
+        X_train, X_dev, X_test, y_train, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def gpt2_final(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='/GPT2_data_final.csv',
+            training_y='/GPT2_answers_final.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False):
+        X_train, X_dev, X_test, y_train, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def gpt2_final(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='/GPT2_data_final_log.csv',
+            training_y='/GPT2_answers_final_log.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False):
+        X_train, X_dev, X_test, y_train, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        return (
+            cls(X_train, y_train, x_transforms, y_transforms, lazy),
+            cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
+            cls(X_test, y_test, x_transforms, y_transforms, lazy)
+        )
+
+    @classmethod
+    def back_translation(
+            cls,
+            data_folder='/content/gdrive/MyDrive/data',
+            training_x='backtranslation_data3.csv',
+            training_y='backtranslation_labels.csv',
+            x_transforms=[],
+            y_transforms=[],
+            lazy=False):
+        X_train_lm, X_dev, X_test, y_train_lm, y_dev, y_test = load_data2(data_folder, training_x, training_y)
+        X_train_plain, X_dev, X_test, y_train_plain, y_dev, y_test = load_data2(data_folder)
+
+        X_train_plain = X_train_plain[['sent0', 'sent1']]        
+
+        # X_train_lm = X_train_lm.head(aug_size)
+        # y_train_lm = y_train_lm.head(aug_size)
+
+        X_train = pd.concat([X_train_plain, X_train_lm], axis=0)
+        y_train = pd.concat([y_train_plain, y_train_lm], axis=0)
+        
         return (
             cls(X_train, y_train, x_transforms, y_transforms, lazy),
             cls(X_dev, y_dev, x_transforms, y_transforms, lazy),

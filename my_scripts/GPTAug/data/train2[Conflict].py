@@ -26,7 +26,7 @@ class MyDataset(Dataset):
             csv_reader = csv.reader(csv_file, delimiter=',')
             for idx, row in enumerate(csv_reader):
                 if idx:
-                    data_str = f"S:{row[1]}/{row[2]}{self.end_of_text_token}"
+                    data_str = f"<SEP> {row[1]} <SEP> {row[2]}{self.end_of_text_token}"
                     self.data_list.append(data_str)
 
     def __len__(self):

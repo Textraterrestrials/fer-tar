@@ -3,22 +3,19 @@
 """
 import os
 import argparse
-
-import pandas as pd
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 import numpy as np
 import warnings
-from tqdm import tqdm
 
 warnings.filterwarnings('ignore')
 
 
-def choose_from_top_k_top_n(probs, k=100, p=0.9):
+def choose_from_top_k_top_n(probs, k=50, p=0.8):
     ind = np.argpartition(probs, -k)[-k:]
     top_prob = probs[ind]
     top_prob = {i: top_prob[idx] for idx, i in enumerate(ind)}
-    sorted_top_prob = {k: v for k, v in sorted(top_prob.items(), key=lambda item: item[1], reverse=False)}
+    sorted_top_prob = {k: v for k, v in sorted(top_prob.items(), key=lambda item: item[1], reverse=True)}
 
     t = 0
     f = []
@@ -35,18 +32,13 @@ def choose_from_top_k_top_n(probs, k=100, p=0.9):
     return int(token_id)
 
 
-def generate(tokenizer, model, sentences):
-    s = []
+def generate(tokenizer, model, sentences, label):
     with torch.no_grad():
-        for idx in tqdm(range(sentences)):
-            k = 50
-            p = 0.9
+        for idx in range(sentences):
             finished = False
-            model.to('cuda:0')
-            cur_ids = torch.tensor(tokenizer.encode('S:')).unsqueeze(0).to('cpu')
-
-            for i in (range(100)):
-                outputs = model(cur_ids.cuda(), labels=cur_ids.cuda())
+            cur_ids = torch.tensor(tokenizer.encode(label)).unsqueeze(0).to('cpu')
+            for i in range(100):
+                outputs = model(cur_ids, labels=cur_ids)
                 loss, logits = outputs[:2]
 
                 softmax_logits = torch.softmax(logits[0, -1], dim=0)
@@ -56,40 +48,31 @@ def generate(tokenizer, model, sentences):
                 else:
                     n = 5
 
-                next_token_id = choose_from_top_k_top_n(softmax_logits.to('cpu').numpy(), k=k,
-                                                        p=p)  # top-k-top-n sampling
-                cur_ids = torch.cat([cur_ids.to('cuda'), torch.ones((1, 1)).long().to('cuda') * next_token_id], dim=1)
+                next_token_id = choose_from_top_k_top_n(softmax_logits.to('cpu').numpy())  # top-k-top-n sampling
+                cur_ids = torch.cat([cur_ids, torch.ones((1, 1)).long().to(device) * next_token_id], dim=1)
 
                 if next_token_id in tokenizer.encode('<|endoftext|>'):
                     finished = True
                     break
-                elif next_token_id in tokenizer.encode('/') or next_token_id in tokenizer.encode('./'):
-                    k = 100
-                    p = 0.9
 
             if finished:
                 output_list = list(cur_ids.squeeze().to('cpu').numpy())
                 output_text = tokenizer.decode(output_list)
-                s.append(output_text[2:-13])
+                print(output_text)
             else:
                 output_list = list(cur_ids.squeeze().to('cpu').numpy())
                 output_text = tokenizer.decode(output_list)
-                # s.append(' '.join(output_text.split(' ')[1:-1]))
-                s.append(output_text[2:-13])
-            if idx % 1000 == 0:
-                pd.DataFrame({'sentence': s}).to_csv('GPT2_medium_aug_sense4', index_label='id')
-        pd.DataFrame({'sentence': s}).to_csv('GPT2_medium_aug_sense4', index_label='id')
+                print(output_text)
 
 
 def load_models(model_name):
     """
-    Summary:
-        Loading the trained model
-    """
+	Summary:
+		Loading the trained model
+	"""
     print('Loading Trained GPT-2 Model')
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2-medium')
     model = GPT2LMHeadModel.from_pretrained('gpt2-medium')
-
     model_path = model_name
     model.load_state_dict(torch.load(model_path))
     return tokenizer, model
@@ -98,19 +81,15 @@ def load_models(model_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Arguments for inferencing Text Augmentation model')
 
-    parser.add_argument('--model_name', default='double_aug.pt.pt', type=str, action='store',
-                        help='Name of the model file')
+    parser.add_argument('--model_name', default='mymodel.pt', type=str, action='store', help='Name of the model file')
     parser.add_argument('--sentences', type=int, default=5, action='store', help='Number of sentences in outputs')
     parser.add_argument('--label', type=str, action='store', help='Label for which to produce text')
     args = parser.parse_args()
 
     SENTENCES = args.sentences
     MODEL_NAME = args.model_name
-    LABEL = '0'
+    LABEL = args.label
 
     TOKENIZER, MODEL = load_models(MODEL_NAME)
-    MODEL.cuda()
-    TOKENIZER.add_special_tokens({'sep_token': '<SEP>'})
-    print(TOKENIZER.__len__())
-    MODEL.resize_token_embeddings(len(TOKENIZER))
-    generate(TOKENIZER, MODEL, SENTENCES)
+
+    generate(TOKENIZER, MODEL, SENTENCES, LABEL)
