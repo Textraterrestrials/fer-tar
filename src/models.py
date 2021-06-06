@@ -1,11 +1,12 @@
+import json
+import os
+
+import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
 from torch import nn, optim
 from transformers import AutoModel, get_linear_schedule_with_warmup
-import os
-import json
-import numpy as np
 
 MODELS = {
     'bert': 'distilbert-base-uncased',
@@ -37,7 +38,6 @@ class TransformerBasedClassifier(pl.LightningModule):
         e1 = torch.exp(sent1_logits)
         return e0 / (e0 + e1)
 
-
     def configure_optimizers(self):
         optimizer = optim.AdamW(
             self.parameters(),
@@ -48,7 +48,7 @@ class TransformerBasedClassifier(pl.LightningModule):
         scheduler = {'scheduler': get_linear_schedule_with_warmup(
             optimizer,
             num_training_steps=self.kwargs.get('training_steps'),
-            num_warmup_steps=self.kwargs.get('training_steps')//8),
+            num_warmup_steps=self.kwargs.get('training_steps') // 8),
             'interval': 'step'
         }
 
@@ -63,7 +63,6 @@ class TransformerBasedClassifier(pl.LightningModule):
     def get_best_loss_and_acc(self):
         loss_idx = np.argmin(self.val_losses)
         return self.val_losses[loss_idx], self.val_accuracies[loss_idx]
-
 
     def validation_step(self, val_batch, batch_idx):  # all samples are in this batch
         x_batch, y_batch = val_batch

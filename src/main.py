@@ -11,7 +11,6 @@ import time
 import json
 from transformers import get_linear_schedule_with_warmup
 
-
 MODEL_PATH = 'results/best_bilstm_w_gpt2_2.pt'
 TEST_RESULTS_PATH = 'results/blstm_w_gpt2_test_2.json'
 
@@ -20,7 +19,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=5)
     parser.add_argument('--lr', type=float, default=1e-4)
-    parser.add_argument('--gamma', type=float, default=1-1e-5)
+    parser.add_argument('--gamma', type=float, default=1 - 1e-5)
     parser.add_argument('--embedding_size', type=int, default=300)
     parser.add_argument('--hidden_size', type=int, default=150)
     parser.add_argument('--batch_size', type=int, default=32)
@@ -43,18 +42,18 @@ if __name__ == '__main__':
 
     train_dataset = data.NLPDataset.from_file(
         args.data_file, args.answers_file
-       # '../../Training/backtranslation_data3.csv',
-       # '../../Training/backtranslation_labels.csv',
-       # '../../Training/Gudi_GPT_data_final_log.csv',
-       # '../../Training/Gudi_GPT_answers_final_log.csv',
-       # '../../Training/GPT2_data_final_log.csv',
-       # '../../Training/GPT2_answers_final_log.csv',
-       # '../../Training/GPT2_data_final.csv',
-       # '../../Training/GPT2_answers_final.csv',
-       # '../../Training/subtaskA_data_all.csv',
-       # '../../Training/subtaskA_answers_all.csv',
-       # '../../smoll_data.csv',
-       # '../../smoll_answers.csv',
+        # '../../Training/backtranslation_data3.csv',
+        # '../../Training/backtranslation_labels.csv',
+        # '../../Training/Gudi_GPT_data_final_log.csv',
+        # '../../Training/Gudi_GPT_answers_final_log.csv',
+        # '../../Training/GPT2_data_final_log.csv',
+        # '../../Training/GPT2_answers_final_log.csv',
+        # '../../Training/GPT2_data_final.csv',
+        # '../../Training/GPT2_answers_final.csv',
+        # '../../Training/subtaskA_data_all.csv',
+        # '../../Training/subtaskA_answers_all.csv',
+        # '../../smoll_data.csv',
+        # '../../smoll_answers.csv',
     )
     text_vocab = train_dataset.text_vocab
     # test_dataset = data.NLPDataset.from_file('data/sst_test_raw.csv', text_vocab, None)
@@ -70,7 +69,8 @@ if __name__ == '__main__':
         train_dataset.text_vocab,
     )
 
-    embedding = text_vocab.create_embedding_matrix(args.embedding_size, path_to_embeddings='../../sst_glove_6b_300d.txt')
+    embedding = text_vocab.create_embedding_matrix(args.embedding_size,
+                                                   path_to_embeddings='../../sst_glove_6b_300d.txt')
     model = models.LSTMModel(
         embedding,
         input_size=args.embedding_size,
@@ -102,17 +102,19 @@ if __name__ == '__main__':
         print("Using GPU")
         model.to('cuda')
 
-    best_val_acc = 0.0 # zapravo nije najbolji acc, nego acc od onog koji ima best_val_loss
+    best_val_acc = 0.0  # zapravo nije najbolji acc, nego acc od onog koji ima best_val_loss
     best_val_loss = 1e6
     epoch_end = 0
     for epoch in range(args.epochs):
         train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True,
                                       collate_fn=data.pad_collate_fn)
-        val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=True, collate_fn=data.pad_collate_fn)
+        val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=True,
+                                    collate_fn=data.pad_collate_fn)
 
-        models.train(model, train_dataloader, optimizer=optimizer, criterion=criterion, scheduler=scheduler, clip=args.clip, epoch=epoch)
+        models.train(model, train_dataloader, optimizer=optimizer, criterion=criterion, scheduler=scheduler,
+                     clip=args.clip, epoch=epoch)
         metrics = models.evaluate(model, val_dataloader, criterion, epoch)
-        print(f"Epoch {epoch+1}: validation loss = {metrics['loss']} validation accuracy: {metrics['accuracy']}")
+        print(f"Epoch {epoch + 1}: validation loss = {metrics['loss']} validation accuracy: {metrics['accuracy']}")
         # if configured, save the model if it is the best
         if args.save_best is True and metrics['accuracy'] > best_val_acc:
             best_val_loss = metrics['loss']
@@ -121,9 +123,9 @@ if __name__ == '__main__':
             torch.save(model, MODEL_PATH)
 
     test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False, collate_fn=data.pad_collate_fn)
-    #metrics = models.evaluate(model, test_dataloader, criterion)
-    #print()
-    #print(f"Test loss = {metrics['loss']} test accuracy = {metrics['accuracy']}")
+    # metrics = models.evaluate(model, test_dataloader, criterion)
+    # print()
+    # print(f"Test loss = {metrics['loss']} test accuracy = {metrics['accuracy']}")
     time.sleep(1)
     cuda.empty_cache()
     time.sleep(1)

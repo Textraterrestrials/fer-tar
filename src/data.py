@@ -156,13 +156,13 @@ class ComVEDataset(torch.utils.data.Dataset):
         X_train_lm, X_dev, X_test, y_train_lm, y_dev, y_test = load_data2(data_folder, training_x, training_y)
         X_train_plain, X_dev, X_test, y_train_plain, y_dev, y_test = load_data2(data_folder)
 
-        X_train_plain = X_train_plain[['sent0', 'sent1']]        
+        X_train_plain = X_train_plain[['sent0', 'sent1']]
 
         X_train_lm = X_train_lm.head(aug_size)
         y_train_lm = y_train_lm.head(aug_size)
 
         X_train = pd.concat([X_train_plain, X_train_lm], axis=0)
-        y_train = pd.concat([y_train_plain, y_train_lm], axis=0)        
+        y_train = pd.concat([y_train_plain, y_train_lm], axis=0)
 
         return (
             cls(X_train, y_train, x_transforms, y_transforms, lazy),
@@ -246,14 +246,14 @@ class ComVEDataset(torch.utils.data.Dataset):
         X_train_lm, X_dev, X_test, y_train_lm, y_dev, y_test = load_data2(data_folder, training_x, training_y)
         X_train_plain, X_dev, X_test, y_train_plain, y_dev, y_test = load_data2(data_folder)
 
-        X_train_plain = X_train_plain[['sent0', 'sent1']]        
+        X_train_plain = X_train_plain[['sent0', 'sent1']]
 
         # X_train_lm = X_train_lm.head(aug_size)
         # y_train_lm = y_train_lm.head(aug_size)
 
         X_train = pd.concat([X_train_plain, X_train_lm], axis=0)
         y_train = pd.concat([y_train_plain, y_train_lm], axis=0)
-        
+
         return (
             cls(X_train, y_train, x_transforms, y_transforms, lazy),
             cls(X_dev, y_dev, x_transforms, y_transforms, lazy),
