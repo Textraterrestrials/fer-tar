@@ -24,10 +24,6 @@ class NLPDataset(Dataset):
             self.text_vocab = Vocab(frequencies, max_size, min_freq)
         else:
             self.text_vocab = text_vocab
-        # if labels_vocab is None:
-        #     self.labels_vocab = Vocab(Counter(i[1] for i in instances), pad_and_unk=False)
-        # else:
-        #     self.labels_vocab = labels_vocab
 
         self.instances = instances
 
@@ -132,27 +128,6 @@ if __name__ == '__main__':
         '../../Training/subtaskA_data_all.csv',
         '../../Training/subtaskA_answers_all.csv'
     )
-    # sent0, sent1, instance_label = train_dataset.instances[2]
-    # print(f"Sent0: {sent0}")
-    # print(f"Sent1: {sent1}")
-    # print(f"Label: {instance_label}")
-    # #
-    # numericalized_sent0, numericalized_sent1, numericalized_label = train_dataset[2]
-    # print(f"Numericalized sent0: {numericalized_sent0}")
-    # print(f"Numericalized sent1: {numericalized_sent1}")
-    # print(f"Numericalized label: {numericalized_label}")
-
-    # train_dataloader = DataLoader(dataset=train_dataset, batch_size=2, shuffle=False, collate_fn=pad_collate_fn)
-    # texts, labels, lengths = next(iter(train_dataloader))
-    # print(f"Texts: {texts}")
-    # print(f"Labels: {labels}")
-    # print(f"Lengths: {lengths}")
-    #
-    # text = train_dataset.instances[1][0]
-    # decoded_text = train_dataset.vocab.decode(texts[1])
-    # print()
-    # print(text)
-    # print(decoded_text)
 
     text_vocab = train_dataset.text_vocab
     embedding = text_vocab.create_embedding_matrix(path_to_embeddings='../../numberbatch-en.txt')

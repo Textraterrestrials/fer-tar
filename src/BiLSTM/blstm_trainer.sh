@@ -1,5 +1,5 @@
 #!/bin/bash
-# samo skriptica da mi pokrene na sva tri dataseta za redom
+# samo skriptica da mi pokrene sve za redom
 
 HIDDEN_SIZE=300
 NUM_LAYERS=2

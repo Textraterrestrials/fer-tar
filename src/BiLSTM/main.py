@@ -41,23 +41,8 @@ if __name__ == '__main__':
         MODEL_PATH = 'ptmodels/' + args.model_name + '.pt'
         TEST_RESULTS_PATH = RESULTS_DIR + args.model_name + '.json'
 
-    train_dataset = data.NLPDataset.from_file(
-        args.data_file, args.answers_file
-       # '../../Training/backtranslation_data3.csv',
-       # '../../Training/backtranslation_labels.csv',
-       # '../../Training/Gudi_GPT_data_final_log.csv',
-       # '../../Training/Gudi_GPT_answers_final_log.csv',
-       # '../../Training/GPT2_data_final_log.csv',
-       # '../../Training/GPT2_answers_final_log.csv',
-       # '../../Training/GPT2_data_final.csv',
-       # '../../Training/GPT2_answers_final.csv',
-       # '../../Training/subtaskA_data_all.csv',
-       # '../../Training/subtaskA_answers_all.csv',
-       # '../../smoll_data.csv',
-       # '../../smoll_answers.csv',
-    )
+    train_dataset = data.NLPDataset.from_file(args.data_file, args.answers_file)
     text_vocab = train_dataset.text_vocab
-    # test_dataset = data.NLPDataset.from_file('data/sst_test_raw.csv', text_vocab, None)
     val_dataset = data.NLPDataset.from_file(
         '../../Dev/subtaskA_dev_data.csv',
         '../../Dev/subtaskA_gold_answers.csv',
@@ -78,17 +63,7 @@ if __name__ == '__main__':
         num_layers=args.num_layers,
     )
 
-    # ispis parametara
-    r = 0
-    gen = model.parameters()
-    next(gen)
-    for param in gen:
-        r += torch.prod(torch.tensor(param.shape))
-        print(param.shape)
-        print(r)
-
     optimizer = AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-    # scheduler = ExponentialLR(optimizer, gamma=args.gamma)
     training_steps = args.epochs * (len(train_dataset) // args.batch_size)
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
@@ -102,7 +77,7 @@ if __name__ == '__main__':
         print("Using GPU")
         model.to('cuda')
 
-    best_val_acc = 0.0 # zapravo nije najbolji acc, nego acc od onog koji ima best_val_loss
+    best_val_acc = 0.0
     best_val_loss = 1e6
     epoch_end = 0
     for epoch in range(args.epochs):
@@ -121,9 +96,6 @@ if __name__ == '__main__':
             torch.save(model, MODEL_PATH)
 
     test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False, collate_fn=data.pad_collate_fn)
-    #metrics = models.evaluate(model, test_dataloader, criterion)
-    #print()
-    #print(f"Test loss = {metrics['loss']} test accuracy = {metrics['accuracy']}")
     time.sleep(1)
     cuda.empty_cache()
     time.sleep(1)
@@ -132,8 +104,6 @@ if __name__ == '__main__':
     if args.save_best is True:
         model = torch.load(MODEL_PATH)
         model.to('cuda')
-
-    # print(torch.cuda.memory_summary(device=None, abbreviated=False))
 
     test_metrics = models.evaluate(model, test_dataloader, criterion, 0, log_predictions=True)
     test_metrics['name'] = args.model_name

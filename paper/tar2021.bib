@@ -1,0 +1,384 @@
+%%% ====================================================================
+%%%  BibTeX-file{
+%%%     author          = "David Rhead",
+%%%     version         = "1.00",
+%%%     date            = "17 Feb 1990",
+%%%     time            = "17:00 GMT",
+%%%     filename        = "test.bib",
+%%%     address         = "Cripps Computing Centre,
+%%%                        University of Nottingham,
+%%%                        University Park,
+%%%                        Nottingham,
+%%%                        NG7 2RD,
+%%%                        United Kingdom",
+%%%     telephone       = "+44 602 484848 Ext 2670",
+%%%     FAX             = "+44 602 588138",
+%%%     checksum        = "05151 839 2908 25082",
+%%%     email           = "David_Rhead at uk.ac.nott.vme (JANET)",
+%%%     codetable       = "ISO/ASCII",
+%%%     keywords        = "bibliography, citation, references",
+%%%     supported       = "no",
+%%%     docstring       = "This BibTeX database file contains entries
+%%%                        designed for testing whether a BibTeX style
+%%%                        file lays references out as recommended by
+%%%                        certain authorities.  (Note, however, that
+%%%                        the BS 1629 examples are from the 1976
+%%%                        edition.  The file needs updating to use
+%%%                        examples from the 1989 edition instead.)
+%%%
+%%%                        The checksum field above contains a CRC-16
+%%%                        checksum as the first value, followed by the
+%%%                        equivalent of the standard UNIX wc (word
+%%%                        count) utility output of lines, words, and
+%%%                        characters.  This is produced by Robert
+%%%                        Solovay's checksum utility.",
+%%%  }
+%%% ====================================================================
+
+
+%% @COMMENT{Some standard works describing conventions for citations
+%%      and bibliographies}
+
+@inproceedings{transformers,
+ author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {I. Guyon and U. V. Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Attention is All you Need},
+ url = {https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf},
+ volume = {30},
+ year = {2017}
+}
+
+@inproceedings{wang-etal-2018-glue,
+    title = "{GLUE}: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding",
+    author = "Wang, Alex  and
+      Singh, Amanpreet  and
+      Michael, Julian  and
+      Hill, Felix  and
+      Levy, Omer  and
+      Bowman, Samuel",
+    booktitle = "Proceedings of the 2018 {EMNLP} Workshop {B}lackbox{NLP}: Analyzing and Interpreting Neural Networks for {NLP}",
+    month = nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W18-5446",
+    doi = "10.18653/v1/W18-5446",
+    pages = "353--355",
+    abstract = "Human ability to understand language is \textit{general, flexible, and robust}. In contrast, most NLU models above the word level are designed for a specific task and struggle with out-of-domain data. If we aspire to develop models with understanding beyond the detection of superficial correspondences between inputs and outputs, then it is critical to develop a unified model that can execute a range of linguistic tasks across different domains. To facilitate research in this direction, we present the General Language Understanding Evaluation (GLUE, gluebenchmark.com): a benchmark of nine diverse NLU tasks, an auxiliary dataset for probing models for understanding of specific linguistic phenomena, and an online platform for evaluating and comparing models. For some benchmark tasks, training data is plentiful, but for others it is limited or does not match the genre of the test set. GLUE thus favors models that can represent linguistic knowledge in a way that facilitates sample-efficient learning and effective knowledge-transfer across tasks. While none of the datasets in GLUE were created from scratch for the benchmark, four of them feature privately-held test data, which is used to ensure that the benchmark is used fairly. We evaluate baselines that use ELMo (Peters et al., 2018), a powerful transfer learning technique, as well as state-of-the-art sentence representation models. The best models still achieve fairly low absolute scores. Analysis with our diagnostic dataset yields similarly weak performance over all phenomena tested, with some exceptions.",
+}
+@Article{HochSchm97,
+  author      = {Sepp Hochreiter and Jürgen Schmidhuber},
+  journal     = {Neural Computation},
+  title       = {Long Short-Term Memory},
+  year        = {1997},
+  number      = {8},
+  pages       = {1735--1780},
+  volume      = {9},
+  optabstract = {Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory (LSTM). Truncating the gradient where this does not do harm, LSTM can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. LSTM is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, LSTM leads to many more successful runs, and learns much faster. LSTM also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms.},
+  optdoi      = {10.1162/neco.1997.9.8.1735},
+  opteprint   = {http://dx.doi.org/10.1162/neco.1997.9.8.1735},
+  opturl      = {http://dx.doi.org/10.1162/neco.1997.9.8.1735},
+}
+
+@article{schuster1997bilstm,
+  title={Bidirectional recurrent neural networks},
+  author={Schuster, Mike and Paliwal, Kuldip K},
+  journal={IEEE transactions on Signal Processing},
+  volume={45},
+  number={11},
+  pages={2673--2681},
+  year={1997},
+  publisher={Ieee}
+}
+
+@inproceedings{wang-etal-2019-make,
+    title = "Does it Make Sense? And Why? A Pilot Study for Sense Making and Explanation",
+    author = "Wang, Cunxiang  and
+      Liang, Shuailong  and
+      Zhang, Yue  and
+      Li, Xiaonan  and
+      Gao, Tian",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P19-1393",
+    doi = "10.18653/v1/P19-1393",
+    pages = "4020--4026",
+    abstract = "Introducing common sense to natural language understanding systems has received increasing research attention. It remains a fundamental question on how to evaluate whether a system has the sense-making capability. Existing benchmarks measure common sense knowledge indirectly or without reasoning. In this paper, we release a benchmark to directly test whether a system can differentiate natural language statements that make sense from those that do not make sense. In addition, a system is asked to identify the most crucial reason why a statement does not make sense. We evaluate models trained over large-scale language modeling tasks as well as human performance, showing that there are different challenges for system sense-making.",
+}
+
+@inproceedings{zhao-etal-2020-ecnu,
+    title = "{ECNU}-{S}ense{M}aker at {S}em{E}val-2020 Task 4: Leveraging Heterogeneous Knowledge Resources for Commonsense Validation and Explanation",
+    author = "Zhao, Qian  and
+      Tao, Siyu  and
+      Zhou, Jie  and
+      Wang, Linlin  and
+      Lin, Xin  and
+      He, Liang",
+    booktitle = "Proceedings of the Fourteenth Workshop on Semantic Evaluation",
+    month = dec,
+    year = "2020",
+    address = "Barcelona (online)",
+    publisher = "International Committee for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.semeval-1.48",
+    pages = "401--410",
+    abstract = "This paper describes our system for SemEval-2020 Task 4: Commonsense Validation and Explanation (Wang et al., 2020). We propose a novel Knowledge-enhanced Graph Attention Network (KEGAT) architecture for this task, leveraging heterogeneous knowledge from both the structured knowledge base (i.e. ConceptNet) and unstructured text to better improve the ability of a machine in commonsense understanding. This model has a powerful commonsense inference capability via utilizing suitable commonsense incorporation methods and upgraded data augmentation techniques. Besides, an internal sharing mechanism is cooperated to prohibit our model from insufficient and excessive reasoning for commonsense. As a result, this model performs quite well in both validation and explanation. For instance, it achieves state-of-the-art accuracy in the subtask called Commonsense Explanation (Multi-Choice). We officially name the system as ECNU-SenseMaker. Code is publicly available at https://github.com/ECNU-ICA/ECNU-SenseMaker.",
+}
+
+@inproceedings{kumar-etal-2020-data,
+    title = "Data Augmentation using Pre-trained Transformer Models",
+    author = "Kumar, Varun  and
+      Choudhary, Ashutosh  and
+      Cho, Eunah",
+    booktitle = "Proceedings of the 2nd Workshop on Life-long Learning for Spoken Language Systems",
+    month = dec,
+    year = "2020",
+    address = "Suzhou, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.lifelongnlp-1.3",
+    pages = "18--26",
+}
+
+@inproceedings{jon-etal-2020-fit,
+    title = "{BUT}-{FIT} at {S}em{E}val-2020 Task 4: Multilingual Commonsense",
+    author = "Jon, Josef  and
+      Fajcik, Martin  and
+      Docekal, Martin  and
+      Smrz, Pavel",
+    booktitle = "Proceedings of the Fourteenth Workshop on Semantic Evaluation",
+    month = dec,
+    year = "2020",
+    address = "Barcelona (online)",
+    publisher = "International Committee for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.semeval-1.46",
+    pages = "374--390",
+    abstract = "We participated in all three subtasks. In subtasks A and B, our submissions are based on pretrained language representation models (namely ALBERT) and data augmentation. We experimented with solving the task for another language, Czech, by means of multilingual models and machine translated dataset, or translated model inputs. We show that with a strong machine translation system, our system can be used in another language with a small accuracy loss. In subtask C, our submission, which is based on pretrained sequence-to-sequence model (BART), ranked 1st in BLEU score ranking, however, we show that the correlation between BLEU and human evaluation, in which our submission ended up 4th, is low. We analyse the metrics used in the evaluation and we propose an additional score based on model from subtask B, which correlates well with our manual ranking, as well as reranking method based on the same principle. We performed an error and dataset analysis for all subtasks and we present our findings.",
+}
+
+@inproceedings{liu-etal-2020-lmve,
+    title = "{LMVE} at {S}em{E}val-2020 Task 4: Commonsense Validation and Explanation Using Pretraining Language Model",
+    author = "Liu, Shilei  and
+      Guo, Yu  and
+      Li, BoChao  and
+      Ren, Feiliang",
+    booktitle = "Proceedings of the Fourteenth Workshop on Semantic Evaluation",
+    month = dec,
+    year = "2020",
+    address = "Barcelona (online)",
+    publisher = "International Committee for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.semeval-1.70",
+    pages = "562--568",
+    abstract = "This paper introduces our system for commonsense validation and explanation. For Sen-Making task, we use a novel pretraining language model based architecture to pick out one of the two given statements that is againstcommon sense. For Explanation task, we use a hint sentence mechanism to improve the performance greatly. In addition, we propose a subtask level transfer learning to share information between subtasks.",
+}
+
+@article{radford2019language,
+  title={Language models are unsupervised multitask learners},
+  author={Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
+  journal={OpenAI blog},
+  volume={1},
+  number={8},
+  pages={9},
+  year={2019}
+}
+
+
+@article{conceptnet,
+author = {Liu, H. and Singh, P.},
+title = {ConceptNet — A Practical Commonsense Reasoning Tool-Kit},
+year = {2004},
+issue_date = {October 2004},
+publisher = {Kluwer Academic Publishers},
+address = {USA},
+volume = {22},
+number = {4},
+issn = {1358-3948},
+url = {https://doi.org/10.1023/B:BTTJ.0000047600.45421.6d},
+doi = {10.1023/B:BTTJ.0000047600.45421.6d},
+abstract = {ConceptNet is a freely available commonsense knowledge base and natural-language-processing tool-kit which supports many practical textual-reasoning tasks over real-world documents including topic-gisting, analogy-making, and other context oriented inferences. The knowledge base is a semantic network presently consisting of over 1.6 million assertions of commonsense knowledge encompassing the spatial, physical, social, temporal, and psychological aspects of everyday life. ConceptNet is generated automatically from the 700 000 sentences of the Open Mind Common Sense Project — a World Wide Web based collaboration with over 14 000 authors.},
+journal = {BT Technology Journal},
+month = oct,
+pages = {211–226},
+numpages = {16}
+}
+
+
+
+@inproceedings{zhang-etal-2020-cn,
+    title = "{CN}-{HIT}-{IT}.{NLP} at {S}em{E}val-2020 Task 4: Enhanced Language Representation with Multiple Knowledge Triples",
+    author = "Zhang, Yice  and
+      Lin, Jiaxuan  and
+      Fan, Yang  and
+      Jin, Peng  and
+      Liu, Yuanchao  and
+      Liu, Bingquan",
+    booktitle = "Proceedings of the Fourteenth Workshop on Semantic Evaluation",
+    month = dec,
+    year = "2020",
+    address = "Barcelona (online)",
+    publisher = "International Committee for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.semeval-1.60",
+    pages = "494--500",
+    abstract = "This paper describes our system that participated in the SemEval-2020 task 4: Commonsense Validation and Explanation. For this task, it is obvious that external knowledge, such as Knowledge graph, can help the model understand commonsense in natural language statements. But how to select the right triples for statements remains unsolved, so how to reduce the interference of irrelevant triples on model performance is a research focus. This paper adopt a modified K-BERT as the language encoder, to enhance language representation through triples from knowledge graphs. Experiments show that our method is better than models without external knowledge, and is slightly better than the original K-BERT. We got an accuracy score of 0.97 in subtaskA, ranking 1/45, and got an accuracy score of 0.948, ranking 2/35.",
+}
+
+@inproceedings{wang-etal-2020-semeval,
+    title = "{S}em{E}val-2020 Task 4: Commonsense Validation and Explanation",
+    author = "Wang, Cunxiang  and
+      Liang, Shuailong  and
+      Jin, Yili  and
+      Wang, Yilong  and
+      Zhu, Xiaodan  and
+      Zhang, Yue",
+    booktitle = "Proceedings of the Fourteenth Workshop on Semantic Evaluation",
+    month = dec,
+    year = "2020",
+    address = "Barcelona (online)",
+    publisher = "International Committee for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.semeval-1.39",
+    pages = "307--321",
+    abstract = "In this paper, we present SemEval-2020 Task 4, Commonsense Validation and Explanation (ComVE), which includes three subtasks, aiming to evaluate whether a system can distinguish a natural language statement that makes sense to humans from one that does not, and provide the reasons. Specifically, in our first subtask, the participating systems are required to choose from two natural language statements of similar wording the one that makes sense and the one does not. The second subtask additionally asks a system to select the key reason from three options why a given statement does not make sense. In the third subtask, a participating system needs to generate the reason automatically. 39 teams submitted their valid systems to at least one subtask. For Subtask A and Subtask B, top-performing teams have achieved results closed to human performance. However, for Subtask C, there is still a considerable gap between system and human performance. The dataset used in our task can be found at https://github.com/wangcunxiang/SemEval2020-Task4-Commonsense-Validation-and-Explanation.",
+}
+
+
+@inproceedings{talmor-etal-2019-commonsenseqa,
+    title = "{C}ommonsense{QA}: A Question Answering Challenge Targeting Commonsense Knowledge",
+    author = "Talmor, Alon  and
+      Herzig, Jonathan  and
+      Lourie, Nicholas  and
+      Berant, Jonathan",
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/N19-1421",
+    doi = "10.18653/v1/N19-1421",
+    pages = "4149--4158",
+    abstract = "When answering a question, people often draw upon their rich world knowledge in addition to the particular context. Recent work has focused primarily on answering questions given some relevant document or context, and required very little general background. To investigate question answering with prior knowledge, we present CommonsenseQA: a challenging new dataset for commonsense question answering. To capture common sense beyond associations, we extract from ConceptNet (Speer et al., 2017) multiple target concepts that have the same semantic relation to a single source concept. Crowd-workers are asked to author multiple-choice questions that mention the source concept and discriminate in turn between each of the target concepts. This encourages workers to create questions with complex semantics that often require prior knowledge. We create 12,247 questions through this procedure and demonstrate the difficulty of our task with a large number of strong baselines. Our best baseline is based on BERT-large (Devlin et al., 2018) and obtains 56{\%} accuracy, well below human performance, which is 89{\%}.",
+}
+
+
+@inproceedings{winograd-levesque,
+author = {Levesque, Hector J. and Davis, Ernest and Morgenstern, Leora},
+title = {The Winograd Schema Challenge},
+year = {2012},
+isbn = {9781577355601},
+publisher = {AAAI Press},
+booktitle = {Proceedings of the Thirteenth International Conference on Principles of Knowledge Representation and Reasoning},
+pages = {552–561},
+numpages = {10},
+location = {Rome, Italy},
+series = {KR'12}
+}
+
+@inproceedings{winograd-morgenstern,
+author = {Morgenstern, Leora and Ortiz, Charles L.},
+title = {The Winograd Schema Challenge: Evaluating Progress in Commonsense Reasoning},
+year = {2015},
+isbn = {0262511290},
+publisher = {AAAI Press},
+booktitle = {Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence},
+pages = {4024–4025},
+numpages = {2},
+location = {Austin, Texas},
+series = {AAAI'15}
+}
+
+@inproceedings{COPA,
+author = {Roemmele, Melissa and Bejan, Cosmin and Gordon, Andrew},
+year = {2011},
+month = {01},
+pages = {},
+title = {Choice of Plausible Alternatives: An Evaluation of Commonsense Causal Reasoning.},
+journal = {AAAI Spring Symposium - Technical Report}
+}
+
+@article{JOCI,
+	author = {Sheng Zhang and Rachel Rudinger and Kevin Duh and Benjamin Van Durme},
+	title = {Ordinal Common-sense Inference},
+	journal = {Transactions of the Association for Computational Linguistics},
+	volume = {5},
+	number = {0},
+	year = {2017},
+	keywords = {},
+	abstract = {Humans have the capacity to draw common-sense inferences from natural language: various things that are likely but not certain to hold based on established discourse, and are rarely stated explicitly. We propose an evaluation of automated common-sense inference based on an extension of recognizing textual entailment: predicting ordinal human responses on the subjective likelihood of an inference holding in a given context. We describe a framework for extracting common-sense knowledge from corpora, which is then used to construct a dataset for this ordinal entailment task. We train a neural sequence-to-sequence model on this dataset, which we use to score and generate possible inferences. Further, we annotate subsets of previously established datasets via our ordinal annotation protocol in order to then analyze the distinctions between these and what we have constructed.},
+	issn = {2307-387X},	pages = {379--395},	url = {https://transacl.org/ojs/index.php/tacl/article/view/1082}
+}
+
+@inproceedings{wolf-etal-2020-transformers,
+    title = "Transformers: State-of-the-Art Natural Language Processing",
+    author = "Thomas Wolf and Lysandre Debut and Victor Sanh and Julien Chaumond and Clement Delangue and Anthony Moi and Pierric Cistac and Tim Rault and Rémi Louf and Morgan Funtowicz and Joe Davison and Sam Shleifer and Patrick von Platen and Clara Ma and Yacine Jernite and Julien Plu and Canwen Xu and Teven Le Scao and Sylvain Gugger and Mariama Drame and Quentin Lhoest and Alexander M. Rush",
+    booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+    month = oct,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.emnlp-demos.6",
+    pages = "38--45"
+}
+
+@inproceedings{pennington2014glove,
+  author = {Jeffrey Pennington and Richard Socher and Christopher D. Manning},
+  booktitle = {Empirical Methods in Natural Language Processing (EMNLP)},
+  title = {GloVe: Global Vectors for Word Representation},
+  year = {2014},
+  pages = {1532--1543},
+  url = {http://www.aclweb.org/anthology/D14-1162},
+}
+
+@article{nucleus,
+  author    = {Ari Holtzman and
+               Jan Buys and
+               Maxwell Forbes and
+               Yejin Choi},
+  title     = {The Curious Case of Neural Text Degeneration},
+  journal   = {CoRR},
+  volume    = {abs/1904.09751},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1904.09751},
+  archivePrefix = {arXiv},
+  eprint    = {1904.09751},
+  timestamp = {Fri, 26 Apr 2019 13:18:53 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1904-09751.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{falcon2019pytorch,
+  title={PyTorch Lightning},
+  author={Falcon, WA, et al.},
+  journal={GitHub. Note: https://github.com/PyTorchLightning/pytorch-lightning},
+  volume={3},
+  year={2019}
+}
+
+@misc{distil-bert,
+      title={DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter}, 
+      author={Victor Sanh and Lysandre Debut and Julien Chaumond and Thomas Wolf},
+      year={2020},
+      eprint={1910.01108},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+
+@misc{albert,
+      title={ALBERT: A Lite BERT for Self-supervised Learning of Language Representations}, 
+      author={Zhenzhong Lan and Mingda Chen and Sebastian Goodman and Kevin Gimpel and Piyush Sharma and Radu Soricut},
+      year={2020},
+      eprint={1909.11942},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+
+@misc{electra,
+      title={ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators}, 
+      author={Kevin Clark and Minh-Thang Luong and Quoc V. Le and Christopher D. Manning},
+      year={2020},
+      eprint={2003.10555},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
