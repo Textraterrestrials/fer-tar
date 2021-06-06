@@ -1,6 +1,6 @@
 from transformers import AutoTokenizer
 
-from src.modelss import MODELS
+from src.models import MODELS
 
 
 class __SentencePairTokenizer:
