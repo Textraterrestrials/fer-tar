@@ -78,10 +78,12 @@ def generate(tokenizer, model, sentences):
                 s.append(output_text[2:-13])
             if idx % 1000 == 0:
                 pd.DataFrame({'sentence': s}).to_csv('GPT2_medium_aug_sense4', index_label='id')
+
+        print(s)
         pd.DataFrame({'sentence': s}).to_csv('GPT2_medium_aug_sense4', index_label='id')
 
 
-def load_models(model_name):
+def load_model(model_name):
     """
     Summary:
         Loading the trained model
@@ -90,7 +92,8 @@ def load_models(model_name):
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2-medium')
     model = GPT2LMHeadModel.from_pretrained('gpt2-medium')
 
-    model_path = model_name
+    # model_path = model_name
+    model_path = '/content/gdrive/MyDrive/fer-tar/gpt_medium_double_aug.pt'
     model.load_state_dict(torch.load(model_path))
     return tokenizer, model
 
